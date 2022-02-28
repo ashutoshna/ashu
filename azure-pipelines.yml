@@ -1,19 +1,67 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
 
-pool:
-  vmImage: ubuntu-latest
+  branches:
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+    include: 
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    - master
+
+#variables:
+
+#  buildConfiguration: 'Release'
+
+#  location: 'Central US'
+
+#  acrHostName: 'cswebappdocker2026acr.azurecr.io'
+
+#  acrName: 'cswebappdocker2026acr'
+
+#  rgName: 'cswebappdocker2026-rg'
+
+#  imageName: 'cswebappdocker2026'
+
+#  webAppName: 'cswebappdocker2026'
+
+
+
+stages:
+
+
+
+# Build Stage
+
+- stage: BuildAndTest
+
+  jobs:
+
+  - job: BuildAndTest
+
+    pool: windows
+
+    steps:
+
+
+
+    # Create or update the ACR resource
+
+    - task: AzureResourceManagerTemplateDeployment@3
+
+      inputs:
+
+        deploymentScope: 'Resource Group'
+
+        azureResourceManagerConnection: 'AzureSC'
+
+        subscriptionId: '3e076d40-2ce9-4ce8-bb26-fe5412589e24'
+
+        action: 'Create Or Update Resource Group'
+
+        resourceGroupName: 'cswebappdocker2026-rg'
+
+        location: 'Central US'
+
+        templateLocation: 'URL of the file'
+
+        csmFileLink: 'https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.kubernetes/aks/azuredeploy.json'
+
+        deploymentMode: 'Incremental'
