@@ -14,9 +14,8 @@ stages:
 
   - job: BuildAndTest
 
-    pool:
-      vmImage: ubuntu-latest
-
+    pool: ashutosh
+      
     steps:
 
 
