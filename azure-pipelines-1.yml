@@ -36,7 +36,8 @@ stages:
 
   - job: BuildAndTest
 
-    pool: windows
+    pool:
+      vmImage: ubuntu-latest
 
     steps:
 
